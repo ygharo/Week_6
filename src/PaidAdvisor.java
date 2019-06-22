@@ -1,9 +1,9 @@
 
 public class PaidAdvisor extends Person {
 
-	protected double regularPayRate = 25;  //# variables to be used in the pay methods
-	protected double specialPayRate = 50;
-	protected double overtimePayRate = 37.50;
+	protected static double regularPayRate = 25;  //# variables to be used in the pay methods
+	protected static double specialPayRate = 50;
+	protected static double overtimePayRate = 37.50;
 
 	protected double hoursSpecial;   //class instance variables which are equivalent to the main class
 	//variables that store the scanner returned values
@@ -89,24 +89,45 @@ public class PaidAdvisor extends Person {
 	//------------------------------------------------------------------------------------------
 	//calculatePay methods
 
-	public double regularPay(double regularHours) {
+	public static double regularPay(double regularHours) {
 		double payment = regularPayRate * regularHours;
 
 		return payment;
 	}
-	public double overtimePay(double overtimeHours) {
+	public static double overtimePay(double overtimeHours) {
 		double payment = overtimePayRate * overtimeHours;
 
 		return payment;
 	}
 
 	
-	public double specialPay(double hoursSpecial) {
+	public static double specialPay(double hoursSpecial) {
 		double payment = specialPayRate * hoursSpecial;
 
 		return payment;
 	}
 	
-	
+	 
+	 public void payday() {
+		double amount;
+		if (hoursSpecial>0) { 
+		amount=PaidAdvisor.specialPay(hoursSpecial);
+		System.out.print(amount);
 }
+		if (overtimeHours>0) {
+			amount=PaidAdvisor.overtimePay(overtimeHours);
+			System.out.print(amount);
+		}
+		if (regularHours>0) {
+			amount=PaidAdvisor.regularPay(regularHours);
+		}
+	 }
+	 public String toString()
+	   {
+	      String result = super.toString(); 
 
+	      result +=(regularHours + overtimeHours + hoursSpecial) ;
+
+	      return result;
+	   }
+}

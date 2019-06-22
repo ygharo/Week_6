@@ -24,6 +24,7 @@ public class Main {
 
 		PaidAdvisor researchConsultant = new PaidAdvisor(null, null, specialHours, specialHours, specialHours);
 		researchConsultant.setHoursWorked(totalHours);
+		researchConsultant.payday();
 		
 		oT = researchConsultant.overtimePay(overtime);
 		sH = researchConsultant.specialPay(specialHours);
