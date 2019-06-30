@@ -1,114 +1,88 @@
-
 public class PaidAdvisor extends Person {
 
-	protected static double regularPayRate = 25; // # variables to be used in the pay methods
-	protected static double specialPayRate = 50;
-	protected static double overtimePayRate = 37.50;
 
-	protected double hoursSpecial; // class instance variables which are equivalent to the main class
-	// variables that store the scanner returned values
-	protected double regularHours;
-	protected double overtimeHours;
+	protected double regularPayRate; // # variables to be used in the pay methods
+	protected double specialPayRate;
+	protected double overtimePayRate;
+
+	protected double hoursSpecial;
+	private double totalPaid;
 	protected double hoursWorked;
 
-	public PaidAdvisor(String first, String last, double specialHours, double overtime, double regular) {
-		super(first, last);
-		specialHours = hoursSpecial; // specialHours, overtime, and regular are the variables that in a main method
+	String name;
+	
+	public PaidAdvisor() {
+
+		regularPayRate = 25;
+		specialPayRate = 50;
+		overtimePayRate = 1.5 * regularPayRate;
+
+	}
+
+//Setters & Getters
+	public void setNameRateHours(String first, String last,
+
+			double rate, double totalHours, double specialHours) {
+
+		hoursSpecial = specialHours;
+		hoursWorked = totalHours; // specialHours, and totalHours are the variables that in a main method
 		// will store the scanner values
-		overtime = overtimeHours;
-		regular = regularHours;
+		name = setName(first, last);
+
 	}
 
-	public double getRegularPayRate() {
-		return regularPayRate;
-	}
+	
+	public double getPayRate(double totalHours) {// getter to return either of the pay rates
 
-	public void setRegularPayRate(double regularPayRate) { // constructor to set regularPayRate
-		this.regularPayRate = regularPayRate;
+		if (totalHours > 30) { // if the employee works 29hrs they are all regular none should be special hours
+			// "Whenever the worker works more than 30 hours"
+
+			return overtimePayRate;
+
+		} else {
+
+			return regularPayRate;
+
+		}
+
 	}
 
 	public double getHoursWorked() {
-		return hoursWorked;
+
+		return hoursWorked; // will be totalHours in main as set in setNameRateHours()
+
 	}
 
-	public void setHoursWorked(double totalHours) {
-		this.hoursWorked = totalHours;
-	}
-
-	public double getSpecialPayRate() {
-		return specialPayRate;
-	}
-
-	public void setSpecialPayRate(double specialPayRate) {
-		this.specialPayRate = specialPayRate;
-	}
-
-	public double getOvertimePayRate() {
-		return overtimePayRate;
-	}
-
-	public void setOvertimePayRate(double overtimePayRate) {
-		this.overtimePayRate = overtimePayRate;
-	}
-
-	public double getHoursSpecial() {
-		return hoursSpecial;
-	}
-
-	public void setHoursSpecial(double hoursSpecial) {
-		this.hoursSpecial = hoursSpecial;
-	}
-
-	public double getRegularHours() {
-		return regularHours;
-	}
-
-	public void setRegularHours(double regularHours) {
-		this.regularHours = regularHours;
-	}
-
-	// ------------------------------------------------------------------------------------------
-	// calculatePay methods
-
-	public static double regularPay(double regularHours) {
-		double payment = regularPayRate * regularHours;
-
+	private double specialPay() {
+		double payment = hoursSpecial * specialPayRate;
 		return payment;
 	}
 
-	public static double overtimePay(double overtimeHours) {
-		double payment = overtimePayRate * overtimeHours;
+	public double calculatePay(double totalHours, double specialHours) {
 
-		return payment;
-	}
+		if (totalHours > 30) { // regular hours+ overtime hours+ special hours
 
-	public static double specialPay(double hoursSpecial) {
-		double payment = specialPayRate * hoursSpecial;
+			totalPaid = (((totalHours - 30 - specialHours) * overtimePayRate) + (30 * regularPayRate) + specialPay());
 
-		return payment;
-	}
+		} else { // if (totalHours<=30) all hours ARE regular hours, no special hour will be calculated
+					// because
+			// "Whenever the worker works more than 30 hours" everything else kicks in
 
-	public void payday() {
-		double amount;
-		if (hoursSpecial > 0) {
-			amount = PaidAdvisor.specialPay(hoursSpecial);
-			System.out.print(amount);
+			totalPaid = totalHours * regularPayRate;
+
 		}
-		if (overtimeHours > 0) {
-			amount = PaidAdvisor.overtimePay(overtimeHours);
-			System.out.print(amount);
-		}
-		if (regularHours > 0) {
-			amount = PaidAdvisor.regularPay(regularHours);
-			System.out.print(amount);
-		}
+
+		return totalPaid;
+
 	}
 
 	public String toString() {
-		String amount = super.toString();
 
-		amount += (regularHours + overtimeHours + hoursSpecial);
+		return "Name: " + super.toString() + "\nTotal Hours: " + hoursWorked + "\nTotal of Special Hours: " + hoursSpecial
+				+ "\nRegular pay rate: $" + regularPayRate + "\nSpecial pay rate: $" + specialPayRate
+				+ "\nOvertime pay rate: " + overtimePayRate;
 
-		return amount;
 	}
+
 }
+

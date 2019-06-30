@@ -14,9 +14,10 @@ public class Person {
 
 	}
 
-	public void setName(String first, String last) { // assigns parameters to these variables
+	public String setName(String first, String last) { // assigns values to the formal parameters
 		firstName = first;
 		lastName = last;
+		return first + last;
 	}
 
 	public String getFirstName() { // returns the value that this var takes
@@ -28,7 +29,7 @@ public class Person {
 	}
 
 	public String toString() {
-		return (firstName + "" + lastName);
+		return (firstName + " " + lastName);
 	}
 
 }
